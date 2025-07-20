@@ -22,7 +22,7 @@ An idle clicker game built in HTML, CSS, and JavaScript. Click, upgrade, repeat.
 ## How to Run
 
 1. Download or clone the repo
-2. Open `GrimReaperClicker.html` in your browser
+2. Open `index.html` in your browser
 
 **OR**
 
