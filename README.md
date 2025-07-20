@@ -4,7 +4,6 @@ An idle clicker game built in HTML, CSS, and JavaScript. Click, upgrade, repeat.
 
 <img width="1919" height="954" alt="Grim Reaper Clicker Screenshot" src="https://github.com/user-attachments/assets/02c163e4-126b-41c8-8e87-bb35398edaa8" />
 
-*(Hosting coming soon!)*
 
 ---
 
@@ -27,7 +26,7 @@ An idle clicker game built in HTML, CSS, and JavaScript. Click, upgrade, repeat.
 
 **OR**
 
-(Once ready) Play it through the website.
+https://aggelospapadakis.github.io/GreamReaperClicker/
 
 ---
 
