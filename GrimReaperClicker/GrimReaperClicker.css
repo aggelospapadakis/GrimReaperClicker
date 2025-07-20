@@ -1,0 +1,612 @@
+@font-face {
+  font-family: 'UnifrakturCook';
+  src: url('UnifrakturCook-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.cursor-image {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 64px; /* adjust as needed */
+  height: 64px;
+  transform: translate(0, 0);
+  transition: opacity 0.5s ease; transform: 0.5s ease;
+  opacity: 1;
+}
+#ToggleSettingsBtn {
+    position: fixed;
+    top: 90%;
+    right: 95%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    border-radius: 20px;
+    background-image: url('Settings-Icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+
+
+}
+#SettingsMenuBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000; /* Ensure it stays above other elements */
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+#SettingsMenu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 1);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  height: 700px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 10001; /* Ensure it stays above other elements */
+}
+#SettingsX {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: grey;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+#DefaultToggleBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: grey;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+#StatsToggleBtn {
+  position: absolute;
+  top: 10px;
+  left: 140px;
+  background-color: grey;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+#SettingsStats {
+  margin-top: 20px;
+  font-family: 'UnifrakturCook', Arial, sans-serif;
+  font-size: 1.5em;
+  color: white;
+  text-align: left;
+  text-shadow:  2px 4px rgba(69, 70, 80, 0.89);
+  margin-left: 50px;
+  margin-top: 50px;
+}
+#MusicSlider {
+  width: 100%;
+  margin-top: 10px;
+}
+#SfxSlider {
+  width: 100%;
+  margin-top: 10px;
+}
+#SaveBtn {
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px;
+    }
+#LoadBtn {
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+
+
+#tooltipBox {
+  position: absolute;
+  background-color: #333;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: none;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 9999;
+}
+#backgroundLayer {
+    background-image: url("GrimReaper.jpeg");
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: red;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  
+main {
+    text-align: center;
+    position: fixed;
+    color: white;
+    left: 0;
+    top: 0;
+    font-family: 'UnifrakturCook', Arial, sans-serif;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    padding-left: 50px;
+    user-select: none;
+}
+
+button {
+    font-family: 'UnifrakturCook';
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+#gameStats {
+    margin-top: 20px;
+    margin-left: -362px;
+}
+
+#toggleUpgradeBtn {
+    position: fixed;
+    top: 10px; /* Slightly above the "Upgrades" text */
+    right: 20px; /* Align with the right edge of the upgrade tab */
+    width: auto; /* Adjust width to fit the text */
+    height: auto; /* Adjust height to fit the text */
+    margin-top: -10px; /* Adjust to align with the top of the upgrade tab */
+    margin-right: 365px; /* Space from the right edge */
+    z-index: 1100; /* Ensure it stays above the upgrade tab */
+    background-color: #444; /* Match the theme */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+#toggleEnhancersBtn {
+    position: fixed;
+    top: 10px; /* Slightly above the "Enhancers" text */
+    right: 20px; /* Align with the right edge of the enhancer tab */
+    width: auto; /* Adjust width to fit the text */
+    height: auto; /* Adjust height to fit the text */
+    margin-top: -10px; /* Adjust to align with the top of the enhancer tab */
+    margin-right: 259px; /* Space from the right edge */
+    z-index: 1101; /* Ensure it stays above the enhancer tab */
+    background-color: #444; /* Match the theme */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+#togglePrestigeBtn {
+    position: fixed;
+    top: 10px; 
+    right: 20px; 
+    width: auto; 
+    height: auto; 
+    margin-top: -10px;
+    margin-right: 165px;
+    z-index: 1102;
+    background-color: #444; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+#toggleUpgradeBtn:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+#toggleEnhancersBtn:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+#togglePrestigeBtn:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+
+
+/* Upgrade tab styling */
+#upgradeTab {
+    position: fixed;
+    top: 0;
+    right: 0; /* Ensure the tab is on the right */
+    width: 450px; /* Wider for better design */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Darker background for contrast */
+    color: white;
+    padding: 20px;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
+    overflow-y: auto;
+    font-family: 'UnifrakturCook', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    z-index: 1000; /* Ensure it stays above other elements */
+    user-select: none;
+    display: none; /* Initially hidden */
+}
+
+#upgradeTab::-webkit-scrollbar {
+    width: 4px;
+}
+
+#upgradeTab::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 2px;
+}
+
+
+#upgradeTab h2 {
+    font-family: 'UnifrakturCook';
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    color: #ffcc00; /* Highlighted title color */
+}
+
+#upgradeTab .upgrade {
+    font-family: 'UnifrakturCook';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 5px 5px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #444; /* Subtle border for definition */
+}
+
+#upgradeTab .upgrade:hover {
+    background-color: #444;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#upgradeTab .upgrade span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#upgradeTab .upgrade .SCostMassCollection {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostWON {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostDAM {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostBAW {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostMisfortune {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostFatherTime {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#upgradeTab .upgrade .SCostPlague {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+
+#upgradeTab .upgrade-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #555;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5em;
+    color: #ffcc00; /* Icon color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhancer tab styling */
+#enhancersTab {
+    position: fixed;
+    top: 0;
+    right: 0; /* Ensure the tab is on the right */
+    width: 450px; /* Wider for better design */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Darker background for contrast */
+    color: white;
+    padding: 20px;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
+    overflow-y: auto;
+    font-family: 'UnifrakturCook', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    z-index: 1000; /* Ensure it stays above other elements */
+    user-select: none;
+    display: none; /* Initially hidden */
+}
+
+#enhancersTab::-webkit-scrollbar {
+    width: 4px;
+}
+
+#enhancersTab::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 2px;
+}
+
+
+#enhancersTab h2 {
+    font-family: 'UnifrakturCook';
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    color: #ffcc00; /* Highlighted title color */
+}
+
+#enhancersTab .enhancer {
+    font-family: 'UnifrakturCook';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 5px 5px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #444; /* Subtle border for definition */
+}
+
+#enhancersTab .enhancer:hover {
+    background-color: #444;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#enhancersTab .enhancer span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#enhancersTab .enhancer .SCostEnhanceMassCollection {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhanceWON {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhanceDAM {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhanceBAW {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhanceMisfortune {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhanceFatherTime {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#enhancersTab .enhancer .SCostEnhancePlague {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+
+#enhancersTab .enhancer-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #555;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5em;
+    color: #ffcc00; /* Icon color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+/* Prestige tab styling */
+#prestigeTab {
+    position: fixed;
+    top: 0;
+    right: 0; /* Ensure the tab is on the right */
+    width: 450px; /* Wider for better design */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Darker background for contrast */
+    color: white;
+    padding: 20px;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
+    overflow-y: auto;
+    font-family: 'UnifrakturCook', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    z-index: 1000; /* Ensure it stays above other elements */
+    user-select: none;
+    display: none; /* Initially hidden */
+}
+#prestigeTab::-webkit-scrollbar {
+    width: 4px;
+}
+
+#prestigeTab::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 2px;
+}
+#prestigeTab h2 {
+    font-family: 'UnifrakturCook';
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    color: #ffcc00; /* Highlighted title color */
+}
+#prestigeTab .prestige {
+    font-family: 'UnifrakturCook';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 5px 5px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #444; /* Subtle border for definition */
+}
+#prestigeTab .prestige:hover {
+    background-color: #444;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+#prestigeTab .prestige span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostMassCollection {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostWON {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostDAM {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostBAW {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostMisfortune {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostFatherTime {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige .SCostBoostPlague {
+    font-size: 1em;
+    color: #ffcc00; /* Highlighted cost color */
+    font-weight: bold;
+}
+#prestigeTab .prestige-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #555;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5em;
+    color: #ffcc00; /* Icon color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+#prestigeTab .prestigeResetBtn {
+    background-color: #ff4444; /* Reset button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#prestigeTab .prestigeResetBtn:hover {
+    background-color: #ff2222; /* Darker shade on hover */
+}
