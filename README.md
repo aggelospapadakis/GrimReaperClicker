@@ -35,10 +35,11 @@ https://aggelospapadakis.github.io/GreamReaperClicker/
 *(From highest to lowest priority)*
 
 1. Fix typos
-2. Improve variable naming
-3. Modularize: Split the JS file into smaller modules for readability and maintainability
-4. Reduce code repetition
-5. Balance the gameplay
+2. CSS compatibility: Reasign element positionings, currently hardcoded px.
+3. Improve variable naming
+4. Modularize: Split the JS file into smaller modules for readability and maintainability
+5. Reduce code repetition
+6. Balance the gameplay
 
 ---
 
