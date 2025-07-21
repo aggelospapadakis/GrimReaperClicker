@@ -26,7 +26,7 @@ An idle clicker game built in HTML, CSS, and JavaScript. Click, upgrade, repeat.
 
 **OR**
 
-https://aggelospapadakis.github.io/GreamReaperClicker/
+https://aggelospapadakis.github.io/GrimReaperClicker/
 
 ---
 
