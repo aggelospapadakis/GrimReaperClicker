@@ -290,9 +290,9 @@ function updateStats() {
   document.getElementById('spsCount').textContent = formatNumber(SPS);
   const prestigePointsEl = document.getElementById('prestigePoints');
   const prestigePointsPng = document.getElementById('prestigePNG');
+  prestigePointsEl.textContent = `Prestige Points: ${formatNumber(prestigePoints)}`;
   if (prestigePointsEl) {
     if (prestigePoints > 0) {
-      prestigePointsEl.textContent = `Prestige Points: ${formatNumber(prestigePoints)}`;
       prestigePointsEl.style.display = 'block';
       prestigePointsPng.style.visibility = 'visible';
     } else {
