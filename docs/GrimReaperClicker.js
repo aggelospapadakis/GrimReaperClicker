@@ -398,7 +398,7 @@ function buyPrestigeUpgrade(id) {
 
 function updatePrestigeUI() {
   const prestigePointsEl = document.getElementById('prestigePoints');
-  if (prestigePointsEl) prestigePointsEl.textContent = `Prestige Points: ${prestigePoints}`;
+  if (prestigePointsEl) prestigePointsEl.textContent = `Prestige Points: ${formatNumber(prestigePoints);}`;
 }
 
 /* =========================
