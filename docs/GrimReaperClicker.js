@@ -139,8 +139,13 @@ function showFloatingMessage(text, x, y) {
 /* =========================
    Click Cursor Image + Text Animation
 ========================= */
+const cursorImageCache = new Image();
+cursorImageCache.src = 'Transparent_Check.png';
+
 function showCursorImage(imgSrc, text, event) {
   let position = event.clientY - 35;
+  
+  // Create the container for the animation
   const container = document.createElement('div');
   container.style.position = 'fixed';
   container.style.left = `${event.clientX - 80}px`;
@@ -149,8 +154,8 @@ function showCursorImage(imgSrc, text, event) {
   container.style.zIndex = '9999';
   document.body.appendChild(container);
 
-  const img = document.createElement('img');
-  img.src = imgSrc;
+  // Use a clone of the preloaded image so each animation is separate
+  const img = cursorImageCache.cloneNode();
   img.className = 'cursor-image';
   img.style.width = '64px';
   img.style.height = 'auto';
@@ -158,6 +163,7 @@ function showCursorImage(imgSrc, text, event) {
   img.style.marginRight = '6px';
   container.appendChild(img);
 
+  // Add the text element
   const span = document.createElement('span');
   span.textContent = text;
   span.style.color = 'white';
@@ -168,6 +174,7 @@ function showCursorImage(imgSrc, text, event) {
   span.style.lineHeight = '60px';
   container.appendChild(span);
 
+  // Animation
   let start = null;
   const duration = 500;
   const distance = 80;
@@ -193,94 +200,99 @@ function showCursorImage(imgSrc, text, event) {
    Unlock Visibility Logic
 ========================= */
 function updateUnlockVisibility() {
-  // Helper for tooltip text
+  const q = id => document.getElementById(id);
+
   function setTooltip(el, text) {
-    if (el) el.setAttribute("data-tooltip", text);
+    if (el) el.setAttribute("data-tooltip", text || "");
   }
 
-  // Upgrades
+  function toggleTab(id, visible) {
+    const tab = q(id);
+    if (tab) tab.style.display = visible && tab.style.display !== "none" ? "block" : "none";
+  }
+
   let anyUpgradeVisible = false;
-  upgrades.forEach(upg => {
-    const upgSpan = document.getElementById(`${upg.id}Name`);
-    const upgTooltip = document.getElementById(`${upg.id}Up`);
-    if (!upgSpan) return;
-    const unlockCost = upg.baseCost * 0.6;
-    if (HighestSoulCount >= unlockCost) {
-      upgSpan.innerHTML = upg.name;
+  for (const upg of upgrades) {
+    const nameEl = q(`${upg.id}Name`);
+    const tooltipEl = q(`${upg.id}Up`);
+    if (!nameEl) continue;
+
+    if (HighestSoulCount >= upg.baseCost * 0.6) {
+      nameEl.innerHTML = upg.name;
+
       if (upg.level > 0) {
-        // Show stats and tooltip for upgrades
         let stat = "", tooltip = "";
+
         if (upg.sps) {
-          const base = upg.baseSps, lvl = upg.level, mm = upg.multiplierSps, pm = upg.prestigeMultiplierSps;
-          let sps = base * lvl * mm * pm;
-          let nextSps = base * (lvl + 1) * mm * pm;
+          const sps = upg.baseSps * upg.level * upg.multiplierSps * upg.prestigeMultiplierSps;
+          const nextSps = upg.baseSps * (upg.level + 1) * upg.multiplierSps * upg.prestigeMultiplierSps;
           stat = ` (${formatNumber(sps)} SPS)`;
-          tooltip = `Increases souls per second by ${formatNumber(nextSps - sps)} \nLore: ${upg.lore}`;
-          upgSpan.innerHTML += `<br class="SPSContribution">${stat}</br>`;
+          tooltip = `Increases souls per second by ${formatNumber(nextSps - sps)}\nLore: ${upg.lore}`;
+          nameEl.innerHTML += `<br class="SPSContribution">${stat}</br>`;
         } else if (upg.multiplier) {
-          const base = upg.baseMultiplier, lvl = upg.level, mm = upg.multiplierMultiplier, pm = upg.prestigeMultiplierMultiplier;
-          let spc = base * lvl * mm * pm;
-          let nextSpc = base * (lvl + 1) * mm * pm;
+          const spc = upg.baseMultiplier * upg.level * upg.multiplierMultiplier * upg.prestigeMultiplierMultiplier;
+          const nextSpc = upg.baseMultiplier * (upg.level + 1) * upg.multiplierMultiplier * upg.prestigeMultiplierMultiplier;
           stat = ` (${formatNumber(spc)} SPC)`;
-          tooltip = `Increases souls per click by ${formatNumber(nextSpc - spc)} \nLore: ${upg.lore}`;
-          upgSpan.innerHTML += `<br class="MultiplierContribution">${stat}</br>`;
+          tooltip = `Increases souls per click by ${formatNumber(nextSpc - spc)}\nLore: ${upg.lore}`;
+          nameEl.innerHTML += `<br class="MultiplierContribution">${stat}</br>`;
         }
-        setTooltip(upgTooltip, tooltip);
+
+        setTooltip(tooltipEl, tooltip);
       }
       anyUpgradeVisible = true;
     } else {
-      upgSpan.innerHTML = '? ? ?';
+      nameEl.innerHTML = "? ? ?";
     }
-  });
+  }
 
-  // Enhancers
   let anyEnhancerVisible = false;
-  enhancers.forEach(enh => {
-    const enhSpan = document.getElementById(`${enh.id}Name`);
-    const enhTooltip = document.getElementById(`${enh.id}`);
-    if (!enhSpan) return;
-    const unlockCost = enh.baseCost * 0.6;
-    if (HighestSoulCount >= unlockCost) {
-      enhSpan.innerHTML = enh.name;
+  for (const enh of enhancers) {
+    const nameEl = q(`${enh.id}Name`);
+    const tooltipEl = q(`${enh.id}`);
+    if (!nameEl) continue;
+
+    if (HighestSoulCount >= enh.baseCost * 0.6) {
+      nameEl.innerHTML = enh.name;
       const upg = upgrades.find(u => u.id === enh.upgEnhancer);
+
       if (enh.level > 0 && upg) {
         let tooltip = "";
         if (upg.sps) {
-          let sps = upg.baseSps * upg.level * ((enh.level + 1) * 1.5) * (upg.prestigeMultiplierSps || 1);
-          let prevSps = upg.baseSps * (enh.level * 1.5) * (upg.prestigeMultiplierSps || 1);
-          tooltip = `${enh.prefix}\n SPS increase by ${formatNumber(sps - prevSps)} \nLore: ${enh.lore}`;
+          const prevSps = upg.baseSps * (enh.level * 1.5) * (upg.prestigeMultiplierSps || 1);
+          const currSps = upg.baseSps * ((enh.level + 1) * 1.5) * (upg.prestigeMultiplierSps || 1);
+          tooltip = `${enh.prefix}\nSPS increase by ${formatNumber(currSps - prevSps)}\nLore: ${enh.lore}`;
         } else if (upg.multiplier) {
-          let spc = upg.baseMultiplier * upg.level * ((enh.level + 1) * 1.5) * (upg.prestigeMultiplierMultiplier || 1);
-          let prevSpc = upg.baseMultiplier * upg.level * (enh.level * 1.5) * (upg.prestigeMultiplierMultiplier || 1);
-          tooltip = `${enh.prefix}\n SPC increase by ${formatNumber(spc - prevSpc)} \nLore: ${enh.lore}`;
+          const prevSpc = upg.baseMultiplier * (enh.level * 1.5) * (upg.prestigeMultiplierMultiplier || 1);
+          const currSpc = upg.baseMultiplier * ((enh.level + 1) * 1.5) * (upg.prestigeMultiplierMultiplier || 1);
+          tooltip = `${enh.prefix}\nSPC increase by ${formatNumber(currSpc - prevSpc)}\nLore: ${enh.lore}`;
         }
-        setTooltip(enhTooltip, tooltip);
+        setTooltip(tooltipEl, tooltip);
       }
       anyEnhancerVisible = true;
     } else {
-      enhSpan.innerHTML = '? ? ?';
+      nameEl.innerHTML = "? ? ?";
     }
-  });
-
-  // Prestige tab unlock (permanent once unlocked)
-  if (!prestigeTabUnlocked && HighestSoulCount >= 1000000) {
-    prestigeTabUnlocked = true;
-    const togglePrestigeBtn = document.getElementById('togglePrestigeBtn');
-    togglePrestigeBtn.classList.remove('has-tooltip');
-    togglePrestigeBtn.setAttribute('data-tooltip', '');
-    togglePrestigeBtn.innerHTML = `Prestige`;
   }
 
-  // Toggle buttons and tab visibility
-  const enhBtn = document.getElementById('toggleEnhancersBtn');
-  if (enhBtn) enhBtn.style.display = anyEnhancerVisible ? '' : 'none';
+  // Prestige tab unlock
+  if (!prestigeTabUnlocked && HighestSoulCount >= 1_000_000) {
+    prestigeTabUnlocked = true;
+    const btn = q("togglePrestigeBtn");
+    if (btn) {
+      btn.classList.remove("has-tooltip");
+      setTooltip(btn, "");
+      btn.innerHTML = "Prestige";
+    }
+  }
 
-  const enhTab = document.getElementById('enhancersTab');
-  if (enhTab) enhTab.style.display = anyEnhancerVisible && enhTab.style.display !== 'none' ? 'block' : 'none';
+  // Toggle buttons and tabs
+  const enhBtn = q("toggleEnhancersBtn");
+  if (enhBtn) enhBtn.style.display = anyEnhancerVisible ? "" : "none";
 
-  const presTab = document.getElementById('prestigeTab');
-  if (presTab) presTab.style.display = prestigeTabUnlocked && presTab.style.display !== 'none' ? 'block' : 'none';
+  toggleTab("enhancersTab", anyEnhancerVisible);
+  toggleTab("prestigeTab", prestigeTabUnlocked);
 }
+
 /* =========================
    Game Logic and Stats Update
 ========================= */
@@ -300,7 +312,6 @@ function updateStats() {
       prestigePointsPng.style.visibility = 'hidden';
     }
   }
-  updateUnlockVisibility();
 }
 
 function handleBackgroundClick(event) {
@@ -1114,3 +1125,4 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 });
+
