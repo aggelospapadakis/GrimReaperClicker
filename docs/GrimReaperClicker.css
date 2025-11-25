@@ -165,13 +165,13 @@ main {
     text-align: center;
     position: fixed;
     color: white;
-    left: 0;
     top: 0;
     font-family: 'UnifrakturCook', Arial, sans-serif;
     font-size: 2em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
-    padding-left: 50px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+    margin-left: 50px;
     user-select: none;
+    width: 300px;
 }
 
 button {
@@ -194,7 +194,6 @@ button:hover {
 
 #gameStats {
     margin-top: 20px;
-    margin-left: -362px;
 }
 
 #toggleUpgradeBtn {
