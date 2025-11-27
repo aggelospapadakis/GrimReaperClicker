@@ -862,8 +862,8 @@ function buyUpgrade(upgradeId) {
     soulCount -= cost;
     upg.level++;
     upg.effect();
-    updateStats();
     updateUpStats();
+    updateStats();
   } else {
     showFloatingMessage('Not enough Souls!', window.innerWidth / 2, window.innerHeight / 2);
   }
@@ -878,8 +878,8 @@ function buyEnhancer(enhancerId) {
     soulCount -= cost;
     enh.level++;
     enh.effect();
-    updateStats();
     updateEnhStats();
+    updateStats();
   } else {
     showFloatingMessage('Not enough Souls!', window.innerWidth / 2, window.innerHeight / 2);
   }
@@ -894,8 +894,8 @@ function buyPrestige(prestigeId) {
     prestigePoints -= cost;
     pres.level++;
     pres.effect();
-    updateStats();
     updatePrestigeStats();
+    updateStats();
   } else {
     showFloatingMessage('Not enough Prestige Points!', window.innerWidth / 2, window.innerHeight / 2);
   }
@@ -1126,5 +1126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 });
+
 
 
