@@ -1080,6 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         upg.level++;
         upg.effect();
         updateUpStats();
+        updateStats();
         recalculateAllPrestigeEnhancers();
       } else {
         showFloatingMessage('Not enough souls!', e.clientX, e.clientY);
@@ -1125,4 +1126,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 });
+
 
